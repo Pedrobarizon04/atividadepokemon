@@ -2,7 +2,6 @@ const express = require('express');
 const Pokemon = require('./models/pokemon');
 
 const app = express();
-app.use(express.json());
 
 app.post('/pokemon', async (req, res) => {
   try {
