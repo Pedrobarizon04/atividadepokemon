@@ -1,23 +1,16 @@
 const express = require('express');
-const Pokemon = require('./models/pokemon');
+const bodyParser = require('body-parser');
+const pokemonRoutes = require('./routes/pokemonRoutes');
 
 const app = express();
 
-app.post('/pokemon', async (req, res) => {
-  try {
-    const { name, type, height, weight, powerLevel } = req.body;
-    const newPokemon = await Pokemon.create({ name, type, height, weight, powerLevel });
-    res.json(newPokemon);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+app.set('view engine', 'ejs');
+app.set('views', './views');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use('/', pokemonRoutes);
 
-Pokemon.sync().then(() => {
-  console.log('Banco de dados sincronizado');
-  app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-  });
-}).catch((error) => {
-  console.error('Erro ao sincronizar banco de dados:', error);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
