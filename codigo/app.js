@@ -1,16 +1,20 @@
+// app.js
 const express = require('express');
-const bodyParser = require('body-parser');
-const pokemonRoutes = require('./routes/pokemonRoutes');
-
 const app = express();
+const router = require('./routes/pokemonRoutes');
+const path = require('path');
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use('/', pokemonRoutes);
+// Middleware para processar JSON
+app.use(express.json());
 
+// Middleware para servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Usar as rotas definidas no arquivo de rotas
+app.use('/', router);
+
+// Definir a porta do servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
