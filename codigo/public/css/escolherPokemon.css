@@ -11,7 +11,7 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    animation: fadeIn 5s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
 }
 
 @keyframes fadeIn {
